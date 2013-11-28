@@ -18,10 +18,18 @@ namespace XmasRingtones
 {
     public partial class MainPage : PhoneApplicationPage
     {
+
         // Constructor
         public MainPage()
         {
             InitializeComponent();
+
+            var ringtones = Ultility.GetAllRingtone();
+            foreach (var ringtone in ringtones)
+            {
+                var ringtoneItem = new RingtoneItem(ringtone);
+                RingtoneListBox.Items.Add(ringtoneItem);
+            }
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -67,7 +75,7 @@ namespace XmasRingtones
             };
             bannerAd.ReceivedAd += OnAdReceived;
             bannerAd.FailedToReceiveAd += OnFailedToReceiveAd;
-            bannerAd.SetValue(Grid.RowProperty,1);
+            bannerAd.SetValue(Grid.RowProperty, 1);
             LayoutRoot.Children.Add(bannerAd);
             var adRequest = new AdRequest();
             bannerAd.LoadAd(adRequest);

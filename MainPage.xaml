@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:local="clr-namespace:XmasRingtones"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -16,11 +17,27 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF020202" Offset="0"/>
+                <GradientStop Color="#FF272D33" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <controls:Pivot x:Name="PivotContainer" Title="Xmas Ringtones" Grid.Row="0" />
+        <controls:Pivot x:Name="PivotContainer" Title="Xmas Ringtones" Grid.Row="0" >
+            <controls:PivotItem x:Name="All" Header="Ringtones" Margin="0">
+                <Grid>
+                    <ListBox x:Name="RingtoneListBox">                        
+                    </ListBox>
+                </Grid>
+            </controls:PivotItem>
+            <controls:PivotItem Header="Favorites" Margin="0">
+                <Grid/>
+            </controls:PivotItem>
+        </controls:Pivot>
     </Grid>
 
 </phone:PhoneApplicationPage>
