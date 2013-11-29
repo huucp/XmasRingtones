@@ -59,23 +59,23 @@ namespace XmasRingtones.ViewModel
             }
         }
 
-        private enum PlayState
+        public enum PlayState
         {
             Play, Pause
         }
 
-        private PlayState _playState = PlayState.Pause;
+        public PlayState PlayingState = PlayState.Pause;
 
         public void PlayPause()
         {
-            if (_playState == PlayState.Pause)
+            if (PlayingState == PlayState.Pause)
             {
-                _playState = PlayState.Play;
+                PlayingState = PlayState.Play;
                 Play();
             }
             else
             {
-                _playState = PlayState.Pause;
+                PlayingState = PlayState.Pause;
                 Pause();
             }
         }
@@ -104,11 +104,11 @@ namespace XmasRingtones.ViewModel
             _ringtone = ringtone;
         }
 
-        private bool _isFavorite = false;
-        public void SetFavorite()
+        public bool IsFavorite = false;
+        public void SetFavorite(bool isFavorite)
         {
-            _isFavorite = !_isFavorite;
-            FavoriteIcon = _isFavorite ? ImageSource.FavoriteGlowIcon : ImageSource.FavoriteIcon;
+            IsFavorite = isFavorite;
+            FavoriteIcon = IsFavorite ? ImageSource.FavoriteGlowIcon : ImageSource.FavoriteIcon;
         }
     }
 }

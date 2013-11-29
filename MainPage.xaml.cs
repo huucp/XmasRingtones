@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -13,6 +14,7 @@ using System.Windows.Shapes;
 using GoogleAds;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
+using XmasRingtones.ViewModel;
 
 namespace XmasRingtones
 {
@@ -24,44 +26,131 @@ namespace XmasRingtones
         {
             InitializeComponent();
 
-            var ringtones = Ultility.GetAllRingtone();
-            foreach (var ringtone in ringtones)
+            LoadAllRingtone();
+            LoadFavorite();
+        }
+
+        private const string FavoriteListSetting = "FavoriteList";
+
+        private List<Ringtone> _allRingtones = new List<Ringtone>();
+
+        private void LoadAllRingtone()
+        {
+            _allRingtones = Ultility.GetAllRingtone();
+            foreach (var ringtone in _allRingtones)
             {
                 var ringtoneItem = new RingtoneItem(ringtone);
+                ringtoneItem.PlayPauseButtonClick += RingtoneItemPlayPauseButtonClick;
+                ringtoneItem.FavoriteButonClick += RingtoneItemFavoriteButonClick;
                 RingtoneListBox.Items.Add(ringtoneItem);
             }
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private void LoadFavorite()
         {
-            var saveRingtoneChooser = new SaveRingtoneTask();
-            saveRingtoneChooser.Completed += saveRingtoneChooser_Completed;
-            saveRingtoneChooser.Source = new Uri("appdata:/Ringtones/a1.mp3");
-
-
-            saveRingtoneChooser.DisplayName = "My custom ringtone";
-
-            saveRingtoneChooser.Show();
+            FavoriteListBox.Items.Clear();
+            if (GlobalVariables.FavoriteRingtones.Count == 0)
+            {
+                string favoriteList;
+                if (AppSettings.TryGetSetting(FavoriteListSetting, out favoriteList))
+                {
+                    var split = Regex.Split(favoriteList, ",");
+                    if (split.Any())
+                    {
+                        foreach (var s in split)
+                        {
+                            for (int index = 0; index < _allRingtones.Count; index++)
+                            {
+                                var rt = _allRingtones[index];
+                                if (rt.Source == s)
+                                {
+                                    GlobalVariables.FavoriteRingtones.Add(rt);
+                                    var rtItem = (RingtoneItem)RingtoneListBox.Items[index];
+                                    rtItem.IsFavorite = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            foreach (var ringtone in GlobalVariables.FavoriteRingtones)
+            {
+                var ringtoneItem = new RingtoneItem(ringtone, isFavorite: true);
+                ringtoneItem.PlayPauseButtonClick += RingtoneItemPlayPauseButtonClick;
+                ringtoneItem.FavoriteButonClick += RingtoneItemFavoriteButonClick;
+                FavoriteListBox.Items.Add(ringtoneItem);
+            }
         }
 
-        private void saveRingtoneChooser_Completed(object sender, TaskEventArgs e)
+        private void RingtoneItemFavoriteButonClick(object sender)
         {
-            switch (e.TaskResult)
+            var item = (RingtoneItem)sender;
+            if (item.IsFavorite)
             {
-                //Logic for when the ringtone was saved successfully
-                case TaskResult.OK:
-                    MessageBox.Show("Ringtone saved.");
-                    break;
+                if (!GlobalVariables.FavoriteRingtones.Contains(item.Source))
+                {
+                    GlobalVariables.FavoriteRingtones.Add(item.Source);
+                }
+            }
+            else
+            {
+                if (GlobalVariables.FavoriteRingtones.Contains(item.Source))
+                {
+                    GlobalVariables.FavoriteRingtones.Remove(item.Source);
+                }
+            }
+            SaveFavorite();
+            LoadFavorite();
+            if (PivotContainer.SelectedIndex == 1)
+            {
+                CheckFavoriteInRingtoneListBox();
+            }
+        }
 
-                //Logic for when the task was cancelled by the user
-                case TaskResult.Cancel:
-                    MessageBox.Show("Save cancelled.");
-                    break;
+        private void SaveFavorite()
+        {
+            string v = string.Empty;
+            foreach (var ringtone in GlobalVariables.FavoriteRingtones)
+            {
+                v += ringtone.Source + ";";
+            }
+            v = v.Remove(v.Count() - 1);
+            AppSettings.StoreSetting(FavoriteListSetting, v);
+        }
 
-                //Logic for when the ringtone could not be saved
-                case TaskResult.None:
-                    MessageBox.Show("Ringtone could not be saved.");
-                    break;
+        private void CheckFavoriteInRingtoneListBox()
+        {
+            RingtoneItem item;
+            foreach (var ringtoneItem in RingtoneListBox.Items)
+            {
+                item = (RingtoneItem)ringtoneItem;
+                item.IsFavorite = GlobalVariables.FavoriteRingtones.Contains(item.Source);
+            }
+        }
+
+        private void RingtoneItemPlayPauseButtonClick()
+        {
+            PauseAll();
+        }
+
+        private void PauseAll()
+        {
+            RingtoneItem ringtoneItem;
+            foreach (var item in RingtoneListBox.Items)
+            {
+                ringtoneItem = (RingtoneItem)item;
+                if (ringtoneItem.PlayingState == RingtoneItemViewModel.PlayState.Play)
+                {
+                    ringtoneItem.PlayPause();
+                }
+            }
+            foreach (var item in FavoriteListBox.Items)
+            {
+                ringtoneItem = (RingtoneItem)item;
+                if (ringtoneItem.PlayingState == RingtoneItemViewModel.PlayState.Play)
+                {
+                    ringtoneItem.PlayPause();
+                }
             }
         }
 
@@ -89,6 +178,11 @@ namespace XmasRingtones
         private void OnFailedToReceiveAd(object sender, AdErrorEventArgs errorCode)
         {
             Debug.WriteLine("Failed to receive ad with error " + errorCode.ErrorCode);
+        }
+
+        private void PivotContainer_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PauseAll();
         }
     }
 }

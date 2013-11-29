@@ -8,7 +8,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="480" d:DesignWidth="480" Height="102">
+    d:DesignHeight="480" d:DesignWidth="480" Height="72">
 
     <UserControl.DataContext>
         <ViewModel:RingtoneItemViewModel/>
@@ -17,21 +17,24 @@
         <ViewModel:StringToImageConverter x:Key="StringToImageConverter"/>
     </UserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneChromeBrush}">
+    <Grid x:Name="LayoutRoot" Background="Transparent">
         <Border BorderBrush="#FF323232" BorderThickness="0,0,0,2" Margin="0">
             <Grid Margin="0" HorizontalAlignment="Right" Width="480">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="70"/>
                     <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Image Margin="0" Grid.Column="0" Source="{Binding Icon, Converter={StaticResource StringToImageConverter}}"/>
                 <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="20,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="24" Text="{Binding Title}" />
-                <Image Margin="0" Grid.Column="4" Source="{Binding FavoriteIcon,Converter={StaticResource StringToImageConverter},TargetNullValue='/UI/favorite_normal.png'}" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                       Width="60" MouseLeftButtonDown="Favorite_OnMouseLeftButtonDown" />
-                <Image Margin="0" Grid.Column="2" Source="{Binding PlayPauseIcon,Converter={StaticResource StringToImageConverter}, TargetNullValue='/UI/play_normal.png'}" Width="60" MouseLeftButtonDown="PlayPause_OnMouseLeftButtonDown"/>
+                <Image Margin="0" Grid.Column="6" Source="{Binding FavoriteIcon,Converter={StaticResource StringToImageConverter},TargetNullValue='/UI/favorite_normal.png'}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                       Width="45" MouseLeftButtonDown="Favorite_OnMouseLeftButtonDown" />
+                <Image Margin="0" Grid.Column="2" Source="{Binding PlayPauseIcon,Converter={StaticResource StringToImageConverter}, TargetNullValue='/UI/play_normal.png'}" Width="45" MouseLeftButtonDown="PlayPause_OnMouseLeftButtonDown"/>
+                <Image Grid.Column="4" Margin="0" VerticalAlignment="Center" Source="/UI/ringtone_normal.png" Width="45" MouseLeftButtonDown="SetRingtone_OnMouseLeftButtonDown"/>
             </Grid>
         </Border>
 

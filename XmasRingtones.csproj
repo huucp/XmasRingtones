@@ -102,6 +102,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppSettings.cs" />
+    <Compile Include="GlobalVariables.cs" />
     <Compile Include="ImageSource.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -444,6 +446,7 @@
     <Content Include="UI\play_normal.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="UI\ringtone_normal.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GoogleAds">
