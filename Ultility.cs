@@ -23,7 +23,7 @@ namespace XmasRingtones
                 string line;
                 while ((line = file.ReadLine()) != null)
                 {
-                    string[] split = Regex.Split(line, " ");
+                    string[] split = Regex.Split(line, ":");
                     var ringtone = new Ringtone(split[1], split[0]);
                     list.Add(ringtone);
                 }

@@ -11,16 +11,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GoogleAds;
+//using GoogleAds;
+using System.Windows.Threading;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
+using Microsoft.Xna.Framework.Media;
 using XmasRingtones.ViewModel;
 
 namespace XmasRingtones
 {
     public partial class MainPage : PhoneApplicationPage
     {
-
+        private bool _hasRingtonePlaying = false;
         // Constructor
         public MainPage()
         {
@@ -28,6 +30,23 @@ namespace XmasRingtones
 
             LoadAllRingtone();
             LoadFavorite();
+
+            var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
+            timer.Tick += CheckMediaPlayerState;
+            timer.Start();
+        }
+
+        private void CheckMediaPlayerState(object sender, EventArgs e)
+        {
+            if (!_hasRingtonePlaying && MediaPlayer.State == MediaState.Playing)
+            {
+                _hasRingtonePlaying = true;
+                return;
+            }
+            if (_hasRingtonePlaying && MediaPlayer.State != MediaState.Playing)
+            {
+                PauseAll();
+            }
         }
 
         private const string FavoriteListSetting = "FavoriteList";
@@ -44,6 +63,7 @@ namespace XmasRingtones
                 ringtoneItem.FavoriteButonClick += RingtoneItemFavoriteButonClick;
                 RingtoneListBox.Items.Add(ringtoneItem);
             }
+
         }
 
         private void LoadFavorite()
@@ -135,6 +155,7 @@ namespace XmasRingtones
 
         private void PauseAll()
         {
+            _hasRingtonePlaying = false;            
             RingtoneItem ringtoneItem;
             foreach (var item in RingtoneListBox.Items)
             {
@@ -157,28 +178,28 @@ namespace XmasRingtones
         private void MainPage_OnLoaded(object sender, RoutedEventArgs e)
         {
 
-            var bannerAd = new AdView
-            {
-                Format = AdFormats.SmartBanner,
-                AdUnitID = "a152956acb16238"
-            };
-            bannerAd.ReceivedAd += OnAdReceived;
-            bannerAd.FailedToReceiveAd += OnFailedToReceiveAd;
-            bannerAd.SetValue(Grid.RowProperty, 1);
-            LayoutRoot.Children.Add(bannerAd);
-            var adRequest = new AdRequest();
-            bannerAd.LoadAd(adRequest);
+            //var bannerAd = new AdView
+            //{
+            //    Format = AdFormats.SmartBanner,
+            //    AdUnitID = "a152956acb16238"
+            //};
+            //bannerAd.ReceivedAd += OnAdReceived;
+            //bannerAd.FailedToReceiveAd += OnFailedToReceiveAd;
+            //bannerAd.SetValue(Grid.RowProperty, 1);
+            //LayoutRoot.Children.Add(bannerAd);
+            //var adRequest = new AdRequest();
+            //bannerAd.LoadAd(adRequest);
         }
 
-        private void OnAdReceived(object sender, AdEventArgs e)
-        {
-            Debug.WriteLine("Received ad successfully");
-        }
+        //private void OnAdReceived(object sender, AdEventArgs e)
+        //{
+        //    Debug.WriteLine("Received ad successfully");
+        //}
 
-        private void OnFailedToReceiveAd(object sender, AdErrorEventArgs errorCode)
-        {
-            Debug.WriteLine("Failed to receive ad with error " + errorCode.ErrorCode);
-        }
+        //private void OnFailedToReceiveAd(object sender, AdErrorEventArgs errorCode)
+        //{
+        //    Debug.WriteLine("Failed to receive ad with error " + errorCode.ErrorCode);
+        //}
 
         private void PivotContainer_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
