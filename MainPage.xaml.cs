@@ -2,19 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-//using GoogleAds;
 using System.Windows.Threading;
+using GoogleAds;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Tasks;
 using Microsoft.Xna.Framework.Media;
 using XmasRingtones.ViewModel;
 
@@ -74,7 +67,7 @@ namespace XmasRingtones
                 string favoriteList;
                 if (AppSettings.TryGetSetting(FavoriteListSetting, out favoriteList))
                 {
-                    var split = Regex.Split(favoriteList, ",");
+                    var split = Regex.Split(favoriteList, ";");
                     if (split.Any())
                     {
                         foreach (var s in split)
@@ -178,28 +171,28 @@ namespace XmasRingtones
         private void MainPage_OnLoaded(object sender, RoutedEventArgs e)
         {
 
-            //var bannerAd = new AdView
-            //{
-            //    Format = AdFormats.SmartBanner,
-            //    AdUnitID = "a152956acb16238"
-            //};
-            //bannerAd.ReceivedAd += OnAdReceived;
-            //bannerAd.FailedToReceiveAd += OnFailedToReceiveAd;
-            //bannerAd.SetValue(Grid.RowProperty, 1);
-            //LayoutRoot.Children.Add(bannerAd);
-            //var adRequest = new AdRequest();
-            //bannerAd.LoadAd(adRequest);
+            var bannerAd = new AdView
+            {
+                Format = AdFormats.SmartBanner,
+                AdUnitID = "a152956acb16238"
+            };
+            bannerAd.ReceivedAd += OnAdReceived;
+            bannerAd.FailedToReceiveAd += OnFailedToReceiveAd;
+            bannerAd.SetValue(Grid.RowProperty, 1);
+            LayoutRoot.Children.Add(bannerAd);
+            var adRequest = new AdRequest();
+            bannerAd.LoadAd(adRequest);
         }
 
-        //private void OnAdReceived(object sender, AdEventArgs e)
-        //{
-        //    Debug.WriteLine("Received ad successfully");
-        //}
+        private void OnAdReceived(object sender, AdEventArgs e)
+        {
+            Debug.WriteLine("Received ad successfully");
+        }
 
-        //private void OnFailedToReceiveAd(object sender, AdErrorEventArgs errorCode)
-        //{
-        //    Debug.WriteLine("Failed to receive ad with error " + errorCode.ErrorCode);
-        //}
+        private void OnFailedToReceiveAd(object sender, AdErrorEventArgs errorCode)
+        {
+            Debug.WriteLine("Failed to receive ad with error " + errorCode.ErrorCode);
+        }
 
         private void PivotContainer_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {

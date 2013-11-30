@@ -449,6 +449,10 @@
     <Content Include="UI\ringtone_normal.png" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="GoogleAds, Version=6.5.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\huupc.TOSYOFFICE\Downloads\lib\windowsphone8\GoogleAds.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup />
