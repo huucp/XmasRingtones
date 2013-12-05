@@ -30,7 +30,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Image Margin="0" Grid.Column="0" Source="{Binding Icon, Converter={StaticResource StringToImageConverter}}"/>
-                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="20,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="24" Text="{Binding Title}" />
+                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="20,0,0,0" Foreground="White" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="24" Text="{Binding Title}" />
                 <Image Margin="0" Grid.Column="6" Source="{Binding FavoriteIcon,Converter={StaticResource StringToImageConverter},TargetNullValue='/UI/favorite_normal.png'}" VerticalAlignment="Center" HorizontalAlignment="Center" 
                        Width="45" MouseLeftButtonDown="Favorite_OnMouseLeftButtonDown" />
                 <Image Margin="0" Grid.Column="2" Source="{Binding PlayPauseIcon,Converter={StaticResource StringToImageConverter}, TargetNullValue='/UI/play_normal.png'}" Width="45" MouseLeftButtonDown="PlayPause_OnMouseLeftButtonDown"/>
