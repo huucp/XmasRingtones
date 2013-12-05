@@ -453,6 +453,7 @@
     <Reference Include="GoogleAds">
       <HintPath>..\Google Ad lib\windowsphone8\GoogleAds.dll</HintPath>
     </Reference>
+    </Reference>
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup />

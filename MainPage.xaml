@@ -27,7 +27,7 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <controls:Pivot x:Name="PivotContainer" Title="Xmas Ringtones" Grid.Row="0" SelectionChanged="PivotContainer_OnSelectionChanged">
+        <controls:Pivot x:Name="PivotContainer" Title="Christmas Ringtones" Grid.Row="0" SelectionChanged="PivotContainer_OnSelectionChanged">
             <controls:PivotItem x:Name="All" Header="Ringtones" Margin="0">
                 <Grid>
                     <ListBox x:Name="RingtoneListBox" />
