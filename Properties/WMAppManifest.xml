@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{5a51105e-53fe-4e29-8f5f-2d777c3bb086}" Title="Christmas Ringtones" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Ka Boom" Description="CHRISTMAS IS COMING!!!&#xD;&#xA;Christmas Ringtones brings 20 free ringtones and sounds to your Android device. Personalize the default ringtone and enjoy your holidays." Publisher="HuuCP" PublisherID="{bfab3ad3-e821-4145-bb39-30710ee19372}">
+  <App xmlns="" ProductID="{5a51105e-53fe-4e29-8f5f-2d777c3bb086}" Title="Christmas Ringtones" RuntimeType="Silverlight" Version="1.0.0.1" Genre="apps.normal" Author="Ka Boom" Description="CHRISTMAS IS COMING!!!&#xD;&#xA;Christmas Ringtones brings 20 free ringtones and sounds to your Android device. Personalize the default ringtone and enjoy your holidays." Publisher="HuuCP" PublisherID="{bfab3ad3-e821-4145-bb39-30710ee19372}">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />

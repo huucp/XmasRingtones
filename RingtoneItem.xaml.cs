@@ -29,22 +29,11 @@ namespace XmasRingtones
             if (isFavorite) IsFavorite = true;
         }
 
-        private void PlayPause_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (PlayingState == RingtoneItemViewModel.PlayState.Pause) OnPlayPauseButtonClick();
-            PlayPause();
-        }
-
         public void PlayPause()
         {
             _viewModel.PlayPause();
         }
 
-        private void Favorite_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            _viewModel.SetFavorite(!IsFavorite);
-            OnFavoriteButonClick();
-        }
 
         public RingtoneItemViewModel.PlayState PlayingState
         {
@@ -83,18 +72,6 @@ namespace XmasRingtones
             if (handler != null) handler(this);
         }
 
-        private void SetRingtone_OnMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            var saveRingtoneChooser = new SaveRingtoneTask();
-            saveRingtoneChooser.Completed += saveRingtoneChooser_Completed;
-            saveRingtoneChooser.Source = new Uri("appdata:" + Source.Source);
-
-
-            saveRingtoneChooser.DisplayName = Source.Title;
-
-            saveRingtoneChooser.Show();
-        }
-
         private void saveRingtoneChooser_Completed(object sender, TaskEventArgs e)
         {
             switch (e.TaskResult)
@@ -116,6 +93,57 @@ namespace XmasRingtones
             }
         }
 
-        #endregion
+        #endregion  
+
+        private bool _playPauseDown = false;
+        private void PlayPause_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _playPauseDown = true;            
+        }
+
+        private void PlayPause_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        { 
+            if (_playPauseDown)
+            {
+                _playPauseDown = false;
+                if (PlayingState == RingtoneItemViewModel.PlayState.Pause) OnPlayPauseButtonClick();
+                PlayPause();
+            }
+        }
+
+        private bool _favoriteDown = false;
+        private void Favorite_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _favoriteDown = true;
+        }
+
+        private void Favorite_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (_favoriteDown)
+            {
+                _favoriteDown = false;
+                _viewModel.SetFavorite(!IsFavorite);
+                OnFavoriteButonClick();
+            }
+        }
+
+        private bool _setRingtoneDown = false;
+        private void SetRingtone_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _setRingtoneDown = true;
+        }
+
+        private void SetRingtone_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if(_setRingtoneDown)
+            {
+                _setRingtoneDown = false;
+                var saveRingtoneChooser = new SaveRingtoneTask();
+                saveRingtoneChooser.Completed += saveRingtoneChooser_Completed;
+                saveRingtoneChooser.Source = new Uri("appdata:" + Source.Source);
+                saveRingtoneChooser.DisplayName = Source.Title;
+                saveRingtoneChooser.Show();
+            }
+        }
     }
 }

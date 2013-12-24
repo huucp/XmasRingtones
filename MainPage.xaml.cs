@@ -10,6 +10,7 @@ using GoogleAds;
 using Microsoft.Phone.Controls;
 using Microsoft.Xna.Framework.Media;
 using XmasRingtones.ViewModel;
+using Microsoft.Phone.Tasks;
 
 namespace XmasRingtones
 {
@@ -127,7 +128,10 @@ namespace XmasRingtones
             {
                 v += ringtone.Source + ";";
             }
-            v = v.Remove(v.Count() - 1);
+            if (v.Any()) // Remove last ";"
+            {
+                v = v.Remove(v.Count() - 1);
+            }
             AppSettings.StoreSetting(FavoriteListSetting, v);
         }
 
@@ -148,7 +152,7 @@ namespace XmasRingtones
 
         private void PauseAll()
         {
-            _hasRingtonePlaying = false;            
+            _hasRingtonePlaying = false;
             RingtoneItem ringtoneItem;
             foreach (var item in RingtoneListBox.Items)
             {
@@ -170,7 +174,47 @@ namespace XmasRingtones
 
         private void MainPage_OnLoaded(object sender, RoutedEventArgs e)
         {
+            LoadAd();
+            CheckRating();
+        }
 
+        private void CheckRating()
+        {
+            bool isRated = false;
+            if (!AppSettings.TryGetSetting("IsRated", out isRated))
+            {
+                AppSettings.StoreSetting("IsRated", false);
+            }
+            if (isRated)
+            {
+                return;
+            }
+
+            int numAppLaunches = 0;
+            AppSettings.TryGetSetting("RatingNumAppLaunches", out numAppLaunches);
+            int numNextRatingPrompt = 0;
+            if (!AppSettings.TryGetSetting("RatingNumNextRating", out numNextRatingPrompt))
+            {
+                numNextRatingPrompt = 10;
+                AppSettings.StoreSetting("RatingNumNextRating", numNextRatingPrompt);
+            }
+            numAppLaunches++; // Count this launch
+            AppSettings.StoreSetting("RatingNumAppLaunches", numAppLaunches);
+
+            if (numAppLaunches % numNextRatingPrompt == 0)
+            {
+                var result = MessageBox.Show("Please rate this app and leave a comment", "Love this app?", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    AppSettings.StoreSetting("IsRated", true);
+                    var reviewTask = new MarketplaceReviewTask();
+                    reviewTask.Show();
+                }
+            }
+        }
+
+        private void LoadAd()
+        {
             var bannerAd = new AdView
             {
                 Format = AdFormats.SmartBanner,

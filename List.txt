@@ -1,4 +1,19 @@
-﻿a1:Dream Bells
+﻿a39:Auld Lang Syne
+a40:Auld lang Syne Remix
+a43:Children sing christmas song
+a61:Xmas & New Year
+a50:Happy New Year
+a51:Happy New Year Remix
+a52:Happy New Year Techno
+a55:New Year Dance
+a53:Happy New Year Bollywood
+a54:Happy New Year India
+a57:Chinese New Year Song
+a58:Chinese New Year
+a59:Vietnamese New Year
+a60:Russian New Year
+a1:Dream Bells
+a49:Magical Bells
 a6:Rock Xmas
 a33:Christmas Hip Hop
 a18:Christmas Tone
@@ -9,20 +24,27 @@ a5:Old Intrustmental Xmas
 a4:Nokia Christmas Tune
 a2:Techno Remix Xmas
 a29:Chrismas Carol Best
+a46:We Wish You A Merry Christmas
+a47:We Wish You A Merry X'Mas
+a48:We Wish You A Merry X'Mas Piano
 a19:Santa Claus Metal
+a56:Santa Claus Is Coming To Madagascar
 a11:Elfs Christmas
 a34:Rap Jingle Bells
 a26:So This Is Christmas
+a62:Xmas Night
 a17:Christmas Time Chipmunks
 a32:Santa Baby
 a20:Cute Merry Christmas
-a7:Last Christmas
+a45:Last Christmas
+a7:Last Christmas Melody
+a44:Last Chirstmas Remix
 a3:Relaxing Christmas
 a23:Andrea Tuborg
 a35:Relaxing Christmas Song
 a10:Frosty The Snowman
 a38:Thank God Chrismas
-a22:Flute Instrusmental
+a22:Jingle Bell Funny
 a24:Christmas Vacation
 a36:Remix Funny Jingle Bells
 a21:Piano Christmas Song

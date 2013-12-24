@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ViewModel="clr-namespace:XmasRingtones.ViewModel" x:Class="XmasRingtones.RingtoneItem"    
+    xmlns:ViewModel="clr-namespace:XmasRingtones.ViewModel" x:Class="XmasRingtones.RingtoneItem"        
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -32,9 +32,12 @@
                 <Image Margin="0" Grid.Column="0" Source="{Binding Icon, Converter={StaticResource StringToImageConverter}}"/>
                 <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="20,0,0,0" Foreground="White" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="24" Text="{Binding Title}" />
                 <Image Margin="0" Grid.Column="6" Source="{Binding FavoriteIcon,Converter={StaticResource StringToImageConverter},TargetNullValue='/UI/favorite_normal.png'}" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                       Width="45" MouseLeftButtonDown="Favorite_OnMouseLeftButtonDown" />
-                <Image Margin="0" Grid.Column="2" Source="{Binding PlayPauseIcon,Converter={StaticResource StringToImageConverter}, TargetNullValue='/UI/play_normal.png'}" Width="45" MouseLeftButtonDown="PlayPause_OnMouseLeftButtonDown"/>
-                <Image Grid.Column="4" Margin="0" VerticalAlignment="Center" Source="/UI/ringtone_normal.png" Width="45" MouseLeftButtonDown="SetRingtone_OnMouseLeftButtonDown"/>
+                       Width="45" MouseLeftButtonDown="Favorite_OnMouseLeftButtonDown" MouseLeftButtonUp="Favorite_OnMouseLeftButtonUp"/>
+                <Image Margin="0" Grid.Column="2" Source="{Binding PlayPauseIcon,Converter={StaticResource StringToImageConverter}, TargetNullValue='/UI/play_normal.png'}" Width="45"
+                       MouseLeftButtonDown="PlayPause_OnMouseLeftButtonDown" MouseLeftButtonUp="PlayPause_OnMouseLeftButtonUp" />
+                <Image Grid.Column="4" Margin="0" VerticalAlignment="Center" Source="/UI/ringtone_normal.png" Width="45" 
+                       MouseLeftButtonDown="SetRingtone_OnMouseLeftButtonDown" MouseLeftButtonUp="SetRingtone_OnMouseLeftButtonUp"/>
+
             </Grid>
         </Border>
 
